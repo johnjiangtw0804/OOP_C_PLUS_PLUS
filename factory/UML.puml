@@ -1,0 +1,49 @@
+@startuml
+title Factory Method Pattern - Payment Processor (with PaymentResult)
+
+' === Interface ===
+interface IPaymentProcessor {
+    +processPayment() : PaymentResult
+}
+
+' === PaymentResult ===
+struct PaymentResult {
+    +success : bool
+    +message : string
+    +transactionId : optional<string>
+}
+
+' === Concrete Products ===
+class CreditCardPayment {
+    +processPayment() : PaymentResult
+}
+
+class PayPalPayment {
+    +processPayment() : PaymentResult
+}
+
+class CryptoPayment {
+    +processPayment() : PaymentResult
+}
+
+' === Factory ===
+class PaymentFactory {
+    +createPaymentProcessor(type: PaymentType) : IPaymentProcessor
+}
+
+' === Enum ===
+enum PaymentType {
+    CREDIT_CARD
+    PAYPAL
+    CRYPTO
+}
+
+' === Relationships ===
+IPaymentProcessor <|.. CreditCardPayment
+IPaymentProcessor <|.. PayPalPayment
+IPaymentProcessor <|.. CryptoPayment
+
+IPaymentProcessor --> PaymentResult
+PaymentFactory --> IPaymentProcessor
+PaymentFactory --> PaymentType
+@enduml
