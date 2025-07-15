@@ -1,3 +1,5 @@
+#include <format>
+#include <thread>
 #include <iostream>
 using namespace std;
 
@@ -54,6 +56,16 @@ once_flag Logger::flag;
 
 int main()
 {
-    Logger& logger = Logger::getLoggerInstance();
-    logger.log("Hello world", Logger::Level::INFO);
+    vector<thread> threads;
+    for (int i = 0; i < 10; i++) {
+        threads.push_back(thread([](){
+            Logger& logger = Logger::getLoggerInstance();
+            string message = format("This is {}", this_thread::get_id());
+            logger.log(message, Logger::Level::INFO);
+        }));
+    }
+
+    for (int i = 0; i < 10; i++) {
+        threads[i].join();
+    }
 }
