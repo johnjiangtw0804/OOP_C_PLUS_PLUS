@@ -42,7 +42,8 @@ public:
     Logger(Logger&& copy) = delete;
     // move assignment
     Logger& operator=(Logger&& assign) = delete;
-    private:
+
+private:
     Logger() = default;
     static unique_ptr<Logger> logger;
     static once_flag flag;

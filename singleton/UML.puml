@@ -2,17 +2,27 @@
 
 title Singleton Pattern - Logger
 
+enum LEVEL {
+    DEFAULT
+    INFO
+    FATAL
+}
+
 class Logger {
-    +getLoggerInstance(): Logger&
-    +Log(): void
+
+    +getLoggerInstance() : Logger& <<static>>
+    +log(message: string, level: LEVEL) : void
 
     -Logger()
-    -Logger (const Logger&) = delete
+    -Logger(const Logger&) = delete
     -Logger& operator=(const Logger&) = delete
-    -Logger (Logger&&) = delete
+    -Logger(Logger&&) = delete
     -Logger& operator=(Logger&&) = delete
 
     ~Logger() = default
+
+    -_logger : unique_ptr<Logger> <<static>>
+    -_flag : once_flag <<static>>
 }
 
 @enduml
