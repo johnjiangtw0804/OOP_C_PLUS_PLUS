@@ -1,0 +1,58 @@
+@startuml
+title Builder Pattern - Pizza
+
+' === Enum ===
+enum SIZE {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+' === Ingredient Interface ===
+interface Ingredient {
+  + getName() : string
+}
+
+' === Concrete Ingredients ===
+class Cheese {
+  + getName() : string
+}
+
+class Bacon {
+  + getName() : string
+}
+
+class Pepperoni {
+  + getName() : string
+}
+
+' === Pizza Product ===
+class Pizza {
+  + size : SIZE
+  + ingredients : vector<unique_ptr<Ingredient>>
+  + printFlavor() : void
+
+  - Pizza()         ' private constructor
+  ~ friend PizzaBuilder `內部可見
+}
+
+' === Builder ===
+class PizzaBuilder <<builder>> {
+  - base : unique_ptr<Pizza>
+
+  + PizzaBuilder()
+  + addCheese() : PizzaBuilder&
+  + addBacon() : PizzaBuilder&
+  + addPepperoni() : PizzaBuilder&
+  + build() : unique_ptr<Pizza>
+}
+
+' === Relationships ===
+Pizza --> SIZE
+Pizza --> Ingredient : uses *
+Ingredient <|.. Cheese
+Ingredient <|.. Bacon
+Ingredient <|.. Pepperoni
+PizzaBuilder --> Pizza
+
+@enduml
