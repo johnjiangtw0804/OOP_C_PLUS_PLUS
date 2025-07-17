@@ -1,0 +1,39 @@
+@startuml Decorator
+
+title Decorator Pattern - Beverage Example
+
+interface IBeverage {
+    +getCost() : int
+    +getDescription() : string
+}
+
+class Espresso {
+    +getCost() : int
+    +getDescription() : string
+}
+
+abstract class BeverageDecorator {
+    -base : IBeverage
+    +BeverageDecorator(base : IBeverage)
+    +getCost() : int
+    +getDescription() : string
+}
+
+class MilkDecorator {
+    +MilkDecorator(base : IBeverage)
+    +getCost() : int
+    +getDescription() : string
+}
+
+class SugarDecorator {
+    +SugarDecorator(base : IBeverage)
+    +getCost() : int
+    +getDescription() : string
+}
+
+IBeverage <|.. Espresso
+IBeverage <|.. BeverageDecorator
+BeverageDecorator <|-- MilkDecorator
+BeverageDecorator <|-- SugarDecorator
+
+@enduml

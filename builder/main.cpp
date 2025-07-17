@@ -84,7 +84,6 @@ public:
     }
 };
 
-
 int main() {
     PizzaBuilder pb;
     unique_ptr<Pizza> my_pizza = pb.addCheese().addBacon().build();
